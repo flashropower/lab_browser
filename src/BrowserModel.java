@@ -42,11 +42,10 @@ public class BrowserModel {
      * Returns the first page in next history, null if next history is empty.
      */
     public URL next () {
-        try {
+        if (hasNext()){
             myCurrentIndex++;
             return myHistory.get(myCurrentIndex);
-        } catch (Exception E) {
-        	
+        } else {
             throw new BrowserException(String.format(myResources.getString("NextError")));
         }
     }
@@ -55,10 +54,10 @@ public class BrowserModel {
      * Returns the first page in back history, null if back history is empty.
      */
     public URL back () {
-        try {
+        if (hasPrevious()){
             myCurrentIndex--;
             return myHistory.get(myCurrentIndex);
-        } catch (Exception e) {
+        } else {
             throw new BrowserException(String.format(myResources.getString("BackError")));
         }
     }
@@ -136,9 +135,9 @@ public class BrowserModel {
      * Returns URL from favorites associated with given name, null if none set.
      */
     public URL getFavorite (String name) {
-        try {
+    	if (name != null && !name.equals("") && myFavorites.containsKey(name)) {
             return myFavorites.get(name);
-        } catch (Exception e) {
+        } else {
             throw new BrowserException(String.format(myResources.getString("FavoriteError")));
         }
     }
